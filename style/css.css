@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+body 
+{
+	font-family: 'Ubuntu', sans-serif;
+}
+/*main.php*/
+.box
+{
+width: 500px;
+padding: 30px;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+border-radius: 0.5rem;
+background: rgba(0,0,0,.8);
+text-align: center;
+box-shadow: 0 15px 25px rgba(0,0,0,.5);
+}
+.box h1
+{
+text-transform: uppercase;
+font-weight: 500;
+}
+.box input[type = "text"],.box input[type = "password"],.box input[type = "date"]
+{
+border:0;
+color: #fff;
+background: none;
+display: block;
+margin: 20px auto;
+text-align: center;
+border: 2px solid #3498db;
+padding: 14px 10px;
+width: 200px;
+outline: none;
+border-radius: 24px;
+transition: 0.25s;
+}
+.box input[type = "text"]:focus,.box input[type = "password"]:focus,.box input[type = "date"]:focus
+{
+width: 280px;
+color: #fff;
+border-color: #2ecc71;
+}
+
+.btn
+{
+cursor: pointer;
+color: #fff;
+background-size: 200%;
+transition: 1s;
+border:0;
+margin: 10px auto;
+text-align: center;
+padding: 14px 40px;
+border-radius: 24px;
+}
+.btncal
+{
+cursor: pointer;
+color: white;
+background-size: 200%;
+transition: 1s;
+border:0;
+margin: 10px auto;
+text-align: center;
+padding: 15px 30px;
+float: right;
+display: inline-block;
+font-size: 16px;
+font-family: "Ubuntu";
+}
+
+.btnregis
+{
+background-image: linear-gradient(to left,#FFC312,#EE5A24,#FFC312);
+}
+.btnindex
+{
+ background-image: linear-gradient(to left, #9796f0, #fbc7d4);
+}
+.btn:hover,.btncal:hover
+{
+background-position: right;
+}
+
+/*signup.php*/
+
+.boxreg
+{
+width: 500px;
+padding: 30px;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+background: rgba(0,0,0,.8);
+box-shadow: 0 15px 25px rgba(0,0,0,.5);
+text-align: center;
+}
+.boxreg h1
+{
+color: white;
+text-transform: uppercase;
+font-weight: 500;
+}
+.boxreg input[type = "text"],.boxreg input[type = "password"]
+{
+border:0;
+background: none;
+display: block;
+margin: 1px auto;
+text-align: center;
+border: 2px solid #3498db;
+padding: 10px 10px;
+width: 200px;
+outline: none;
+color: white;
+border-radius: 24px;
+transition: 0.25s;
+}
+.boxreg input[type = "text"]:focus,.boxreg input[type = "password"]:focus
+{
+width: 280px;
+border-color: #FFA20B;
+}
+.boxreg input[type = "button"]
+{
+border:0;
+background: none;
+display: block;
+margin: 3px auto;
+text-align: center;
+border: 2px solid #FFA20B;
+padding: 14px 40px;
+outline: none;
+color: white;
+border-radius: 24px;
+transition: 0.25s;
+cursor: pointer;
+}
+.boxreg input[type = "button"]:hover
+{
+background: #FFA20B;
+}
+.boxregsuc
+{
+width: 500px;
+padding: 30px;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+background: rgba(0,0,0,.8);
+box-shadow: 0 15px 25px rgba(0,0,0,.5);
+text-align: center;
+}
