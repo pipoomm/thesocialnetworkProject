@@ -36,7 +36,7 @@ include("includes/header.php");
     <script src="dist/PlacePicker.js"></script>
 	  <script>
 	        grecaptcha.ready(function () {
-	            grecaptcha.execute('6LfHs8IUAAAAAN7L_O2Cu7vvqsSHmajCJcJEJ5OK', { action: 'contact' }).then(function (token) {
+	            grecaptcha.execute('6LfHs8IUAAAAAN7L_O2Cu7vvqsSHmajCJcJEJ5OK', { action: 'social' }).then(function (token) {
 	                var recaptchaResponse = document.getElementById('recaptchaResponse');
 	                recaptchaResponse.value = token;
 	            });

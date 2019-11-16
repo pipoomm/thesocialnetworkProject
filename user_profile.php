@@ -29,9 +29,10 @@ body {
 	background: linear-gradient(to left, #2980b9, #2c3e50);
 }
 #own_posts{
-    border: 5px solid #e6e6e6;
     padding: 40px 50px;
 	width:90%;
+    background-color: #EEEEEE;
+    border-radius: 5px;
 }
 #posts_img {
     height:300px;
@@ -145,11 +146,6 @@ body {
 	right: 20px;
 	cursor: pointer;
 	transform: translate(-50%, -50%);
-}
-#own_posts{
-    border: 3px solid #e6e6e6;
-    border-radius: 0.5rem;
-    padding: 30px 40px;
 }
 </style>
 </style>
@@ -392,9 +388,16 @@ body {
 
 				$post_id = $row_posts['post_id'];
 				$user_id = $row_posts['user_id'];
+                $location = $row_posts['location'];
 				$content = $row_posts['post_content'];
 				$upload_image = $row_posts['upload_image'];
 				$post_date = $row_posts['post_date'];
+                $get_com = "SELECT  post_id, COUNT(*)  FROM `comments` WHERE post_id='$post_id'";
+
+                    $run_com = mysqli_query($con,$get_com);
+                    while($row=mysqli_fetch_array($run_com)){
+                        $count = $row["COUNT(*)"];
+                }
 
 				//getting the user who has posted the thread
 
@@ -407,92 +410,252 @@ body {
 				$f_name = $row['f_name'];
 				$l_name = $row['l_name'];
 				$user_image = $row_user['user_image'];
+               
 
 
 				//now displaying all at once
+                if($content=="No" && strlen($upload_image) >= 1 && strlen($location) >= 1){
+            echo"
+            <div class='row'>
 
-				if($content=="No" && strlen($upload_image) >= 1){
-				echo "
-                <div id='own_posts'>
-                <div class='row'>
-                    <div class='col-sm-2'>
+                <div id='own_posts' class='col-md-12'>
+
+                    <div class='row'>
+
+                        <div class='col-sm-2'>
+
                         <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
+
+                        </div>
+
+                        <div class='col'>
+
+                            <h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+
+                            <h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
+                            <h6><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h6>
+
+                        </div>
+
                     </div>
-                    <div class='col-sm-6'>
-                        <h5><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h5>
-                        <p><small style='color:black;'>Updated a post on <strong>$post_date <i class='fas fa-globe-asia'></i></strong></small><p>
-                    </div>
-                    <div class='col-sm-4'>
-                    </div>
+
+                    <div class='row'>
+
+                        <div class='col-sm-12'>
+
+                            <center><img class='img-fluid' id='posts-img' src='imagepost/$upload_image' style='height:350px;'></center>
+
+                        </div>
+
+                    </div><br>
+
+                    <a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-sm btn-info'>$count Comment</button></a><br>
+
                 </div>
-                <div class='row'>
-                    <div class='col-sm-12'>
-                        <img class='img-fluid' id='posts-img' src='imagepost/$upload_image' style='height:200px;'>
+
+                <div class='col-sm-3'>
+
+                </div>
+
+            </div><hr>
+
+            ";
+
+        }
+
+        else if($content=="No" && strlen($upload_image) >= 1 && strlen($location) == 0){
+            echo"
+            <div class='row'>
+
+                <div id='own_posts' class='col-md-12'>
+
+                    <div class='row'>
+
+                        <div class='col-sm-2'>
+
+                        <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
+
+                        </div>
+
+                        <div class='col'>
+
+                            <h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+
+                            <h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
+
+                        </div>
+
                     </div>
-                </div><br>
-            </div><br><br>
+
+                    <div class='row'>
+
+                        <div class='col-sm-12'>
+
+                            <center><img class='img-fluid' id='posts-img' src='imagepost/$upload_image' style='height:350px;'></center>
+
+                        </div>
+
+                    </div><br>
+
+                    <a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-sm btn-info'>$count Comment</button></a><br>
+
+                </div>
+
+                <div class='col-sm-3'>
+
+                </div>
+
+            </div><hr>
+
+            ";
+
+        }
+
+
+
+        else if(strlen($content) >= 1 && strlen($upload_image) >= 1 && strlen($location) >= 1)
+        {
+
+            echo"
+
+            <div class='row'>
+
+                <div id='own_posts' class='col-md-12'>
+
+                    <div class='row'>
+
+                        <div class='col-sm-2'>
+
+                        <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
+
+                        </div>
+
+                        <div class='col'>
+
+                            <h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+                            <h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
+                            <h6><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h6>
+
+
+                        </div>
+
+                    </div>
+
+                    <div class='row'>
+
+                        <div class='col-sm-12'>
+
+                            <h3 style='color:black;'>$content</h3><br>
+
+                            <center><img class='img-fluid' id='posts-img' src='imagepost/$upload_image' style='height:350px;'></center>
+
+                        </div>
+
+                    </div><br>
+
+                    <a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-sm btn-info'>$count Comment</button></a><br>
+
+                </div>
+
+                <div class='col-sm-3'>
+
+                </div>
+
+            </div><hr>
+
+            ";
+
+        }
+
+
+        //content only 
+        else if(strlen($content) >= 1)
+        {
+            if(strlen($location) >= 1)
+            {
+                echo"
+                <div class='row'>
+                    <div id='own_posts' class='col-md-12'>
+                        <div class='row'>
+                            <div class='col-sm-2'>
+                            <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
+                            </div>
+                            <div class='col'>
+                                <h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+                                <h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
+                                <h6><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h6>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <h3 style='color:black;'>$content</h3>
+                            </div>
+                        </div><br>
+                        <a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-sm btn-info'>$count Comment</button></a><br>
+                    </div>
+                    <div class='col-sm-3'>
+                    </div>
+                </div><hr>
                 ";
-
-
-				}
-				else if(strlen($content) >= 1 && strlen($upload_image) >= 1){
-				echo "
-            <div id='own_posts'>
+            }
+            else if(strlen($location) == 0)
+            {
+                echo"
                 <div class='row'>
-
-                
-                    <div class='col-sm-2'>
-                        <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
+                    <div id='own_posts' class='col-md-12'>
+                        <div class='row'>
+                            <div class='col-sm-2'>
+                            <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
+                            </div>
+                            <div class='col'>
+                                <h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+                                <h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <h3 style='color:black;'>$content</h3>
+                            </div>
+                        </div><br>
+                        <a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-sm btn-info'>$count Comment</button></a><br>
                     </div>
-                    <div class='col-sm-6'>
-                        <h5><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h5>
-                        <p><small style='color:black;'>Updated a post on <strong>$post_date <i class='fas fa-globe-asia'></i></strong></small></p>
+                    <div class='col-sm-3'>
                     </div>
-                    <div class='col-sm-4'>
-                        
-                    </div>
-                </div>
+                </div><hr>
+                ";
+            }
+        }
+        else if(strlen($content) == 0 && strlen($upload_image) == 0 && strlen($location) >= 1)
+        {
+            echo"
                 <div class='row'>
-                    <div class='col-sm-12'>
-                        <label>$content</label><br>
-                        <img class='img-fluid' id='posts-img' src='imagepost/$upload_image' style='height:200px;'>
+                    <div id='own_posts' class='col-md-12'>
+                        <div class='row'>
+                            <div class='col-sm-2'>
+                            <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
+                            </div>
+                            <div class='col'>
+                                <h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+                                <h5><small style='color:black;'>Updated a check-in on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
+                                <h5><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h5>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-sm-12'>
+                                <h3 style='color:black;'></h3>
+                            </div>
+                        </div><br>
+                        <a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-sm btn-info'>$count Comment</button></a><br>
                     </div>
-                </div><br>
-            </div><br><br>
-            ";
+                    <div class='col-sm-3'>
+                    </div>
+                </div><hr>
+                ";
+        }
+    
+    
 
-
-				}
-				else{
-
-				echo "
-            <div id='own_posts'>
-                <div class='row'>
-                    <div class='col-sm-2'>
-                        <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
-                    </div>
-                    <div class='col-sm-6'>
-                        <h5><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h5>
-                        <p><small style='color:black;'>Updated a post on <strong>$post_date <i class='fas fa-globe-asia'></i></strong></small></p>
-                    </div>
-                    <div class='col-sm-4'>
-                        
-                    </div>
-                </div>
-                <div class='row'>
-                    <div class='col-sm-2'>
-                    </div>
-                    <div class='col-sm-6'>
-                        <label>$content</label>
-                    </div>
-                    <div class='col-sm-4'>
-                        
-                    </div>
-                </div><br><br>
-            ";
-
-
-			}
+				
 		}
 		?>
                             </div>

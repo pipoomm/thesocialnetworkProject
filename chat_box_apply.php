@@ -229,7 +229,7 @@ load_chat = function(userID){
 setInterval(function(){
 	var userID = $("#userID2").val(); // id user ของผู้รับ
 	load_chat(userID); // เรียกใช้งานฟังก์ช่นแสดงข้อความล่าสุด
-},4000);	
+},3000);	
 $(function(){
 	
 

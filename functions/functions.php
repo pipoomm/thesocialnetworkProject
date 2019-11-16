@@ -750,41 +750,19 @@ function search_user(){
 
 
 function single_post(){
-
 	if(isset($_GET['post_id'])){
-
-
-
 	global $con;
-
-
-
 	$get_id = $_GET['post_id'];
-
-
-
 	$get_posts = "SELECT * FROM `posts` WHERE post_id='$get_id'";
-
-
-
 	$run_posts = mysqli_query($con,$get_posts);
-
-
-
 	$row_posts=mysqli_fetch_array($run_posts);
 
-
-
 		$post_id = $row_posts['post_id'];
-
 		$user_id = $row_posts['user_id'];
-
 		$content = $row_posts['post_content'];
-
 		$upload_image = $row_posts['upload_image'];
-
 		$post_date = $row_posts['post_date'];
-
+		$location = $row_posts['location'];
 
 
 		//getting the user who has posted the thread
@@ -877,7 +855,8 @@ function single_post(){
 
 
 
-		if($content=="No" && strlen($upload_image) >= 1){
+		if($content=="No" && strlen($upload_image) >= 1 && strlen($upload_image) == 0)
+		{
 
 
 
@@ -948,8 +927,8 @@ function single_post(){
 
 
 		}
-
-		else if(strlen($content) >= 1 && strlen($upload_image) >= 1){
+		else if($content=="No" && strlen($upload_image) >= 1 && strlen($location) >= 1)
+		{
 
 
 
@@ -971,11 +950,12 @@ function single_post(){
 
 					</div>
 
-					<div class='col-md-auto'>
+					<div class='col'>
 
 						<h3><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
 
 						<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
+                        <h5><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h5>
 
 					</div>
 
@@ -985,12 +965,62 @@ function single_post(){
 
 					<div class='col-sm-12'>
 
-						<h3>$content</h3><br>
-
 						<center><img class='img-fluid' id='posts-img' src='imagepost/$upload_image' style='height:350px;'></center>
 
 					</div>
 
+				</div>
+
+				<form action='' method='post'>
+
+  <div class='form-group'>
+
+    <label for='exampleInputEmail1'>Email address</label>
+
+    <input type='text' class='form-control' name='comment' placeholder='Write your comment'>
+
+  </div>
+
+  <button class='btn btn-primary' name='reply' style='float:right;'><i class='fas fa-reply'></i> Comment</button>
+
+</form>
+
+
+				</div>
+
+				<div class='col-sm-3'>
+
+				</div>
+
+			</div><br><br>
+
+			";
+
+
+
+		}
+
+		else if(strlen($content) >= 1 && strlen($upload_image) >= 1 && strlen($location) == 0)
+		{
+			echo "
+			<div class='row'>
+				<div class='col-sm-3'>
+				</div>
+				<div id='posts' class='col-sm-6'>
+				<div class='row'>
+					<div class='col-sm-2'>
+						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
+					</div>
+					<div class='col-md-auto'>
+						<h3><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+						<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
+					</div>
+				</div>
+				<div class='row'>
+					<div class='col-sm-12'>
+						<h3>$content</h3><br>
+						<center><img class='img-fluid' id='posts-img' src='imagepost/$upload_image' style='height:350px;'></center>
+					</div>
 				</div>
 
 <form action='' method='post'>
@@ -1006,9 +1036,56 @@ function single_post(){
   <button class='btn btn-primary' name='reply' style='float:right;'><i class='fas fa-reply'></i> Comment</button>
 
 </form>
+				</div>
 
-				<!--<a class='first' href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>-->
+				<div class='col-sm-3'>
 
+				</div>
+
+			</div><br><br>
+
+			";
+
+
+
+		}
+		else if(strlen($content) >= 1 && strlen($upload_image) >= 1 && strlen($location) >= 1)
+		{
+			echo "
+			<div class='row'>
+				<div class='col-sm-3'>
+				</div>
+				<div id='posts' class='col-sm-6'>
+				<div class='row'>
+					<div class='col-sm-2'>
+						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
+					</div>
+					<div class='col'>
+						<h3><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+						<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
+						<h5><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h5>
+					</div>
+				</div>
+				<div class='row'>
+					<div class='col-sm-12'>
+						<h3>$content</h3><br>
+						<center><img class='img-fluid' id='posts-img' src='imagepost/$upload_image' style='height:350px;'></center>
+					</div>
+				</div>
+
+<form action='' method='post'>
+
+  <div class='form-group'>
+
+    <label for='exampleInputEmail1'>Email address</label>
+
+    <input type='text' class='form-control' name='comment' placeholder='Write your comment'>
+
+  </div>
+
+  <button class='btn btn-primary' name='reply' style='float:right;'><i class='fas fa-reply'></i> Comment</button>
+
+</form>
 				</div>
 
 				<div class='col-sm-3'>
@@ -1023,90 +1100,121 @@ function single_post(){
 
 		}
 
-		else{
-
-
+		else if (strlen($content) >= 1 && strlen($upload_image) == 0 && strlen($location) == 0){
 
 		echo "
-
-
-
 		<div class='row'>
-
 			<div class='col-sm-3'>
-
 			</div>
-
 			<div id='posts' class='col-sm-6'>
-
 			<div class='row'>
-
 					<div class='col-sm-2'>
-
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
-
 					</div>
-
-					<div class='col-md-auto'>
-
+					<div class='col'>
 						<h3><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
-
 						<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
-
 					</div>
-
 				</div>
-
 				<div class='row'>
-
 					<div class='col-sm-2'>
-
 					</div>
-
 					<div class='col-sm-6'>
-
 						<h3><p>$content</p></h3>
-
 					</div>
-
 					<div class='col-sm-4'>
-
-
-
 					</div>
-
 				</div>
-
 				<form action='' method='post'>
-
   <div class='form-group'>
-
     <label for='exampleInputEmail1'>Email address</label>
-
     <input type='text' class='form-control' name='comment' placeholder='Write your comment'>
-
   </div>
-
   <button class='btn btn-primary' name='reply' style='float:right;'><i class='fas fa-reply'></i> Comment</button>
-
 </form>
-
-
-
-				<!--<a class='first' href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>-->
-
 			</div>
-
 			<div class='col-sm-3'>
-
 			</div>
-
 		</div><br><br>
-
-
-
 		";
+	}
+	else if (strlen($content) >= 1 && strlen($upload_image) == 0 && strlen($location) >= 1){
 
+		echo "
+		<div class='row'>
+			<div class='col-sm-3'>
+			</div>
+			<div id='posts' class='col-sm-6'>
+			<div class='row'>
+					<div class='col-sm-2'>
+						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
+					</div>
+					<div class='col-md-auto'>
+						<h3><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+						<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
+						<h5><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h5>
+					</div>
+				</div>
+				<div class='row'>
+					<div class='col-sm-2'>
+					</div>
+					<div class='col-sm-6'>
+						<h3><p>$content</p></h3>
+					</div>
+					<div class='col-sm-4'>
+					</div>
+				</div>
+				<form action='' method='post'>
+  <div class='form-group'>
+    <label for='exampleInputEmail1'>Email address</label>
+    <input type='text' class='form-control' name='comment' placeholder='Write your comment'>
+  </div>
+  <button class='btn btn-primary' name='reply' style='float:right;'><i class='fas fa-reply'></i> Comment</button>
+</form>
+			</div>
+			<div class='col-sm-3'>
+			</div>
+		</div><br><br>
+		";
+	}
+	else if (strlen($content) == 0 && strlen($upload_image) == 0 && strlen($location) >= 1){
+
+		echo "
+		<div class='row'>
+			<div class='col-sm-3'>
+			</div>
+			<div id='posts' class='col-sm-6'>
+			<div class='row'>
+					<div class='col-sm-2'>
+						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
+					</div>
+					<div class='col'>
+						<h3><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+						<h4><small style='color:black;'>Updated check-in on <strong>$post_date</strong></small></h4>
+						<h4><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h4>
+					</div>
+				</div>
+				<div class='row'>
+					<div class='col-sm-2'>
+					</div>
+					<div class='col-sm-6'>
+						<h3><p></p></h3>
+					</div>
+					<div class='col-sm-4'>
+					</div>
+				</div>
+				<form action='' method='post'>
+  <div class='form-group'>
+    <label for='exampleInputEmail1'>Email address</label>
+    <input type='text' class='form-control' name='comment' placeholder='Write your comment'>
+  </div>
+  <button class='btn btn-primary' name='reply' style='float:right;'><i class='fas fa-reply'></i> Comment</button>
+</form>
+			</div>
+			<div class='col-sm-3'>
+			</div>
+		</div><br><br>
+		";
 	}
 
 		

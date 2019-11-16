@@ -100,7 +100,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recaptcha_response'])
 
   			confirmButtonText: 'OK'
 
-				})</script>";
+				})
+				console.log($recaptcha->score);
+				</script>";
 
   		} 
 

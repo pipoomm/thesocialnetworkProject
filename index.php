@@ -32,7 +32,7 @@ error_reporting(0);
 
         grecaptcha.ready(function () {
 
-            grecaptcha.execute('6LfHs8IUAAAAAN7L_O2Cu7vvqsSHmajCJcJEJ5OK', { action: 'contact' }).then(function (token) {
+            grecaptcha.execute('6LfHs8IUAAAAAN7L_O2Cu7vvqsSHmajCJcJEJ5OK', { action: 'login' }).then(function (token) {
 
                 var recaptchaResponse = document.getElementById('recaptchaResponse');
 

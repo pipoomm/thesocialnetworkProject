@@ -203,12 +203,20 @@ $.ajax({
 	}
 });
 }
-setInterval (function(){display();} ,3000);
+setInterval (function(){display();} ,1000);
 
 		$("#message").keypress(function (e) {
 		if (e.keyCode == 13) {
 		var name = $("#user_name").val();
 		var message = $("#message").val();
+		if(!message)
+		{
+			$('#chatBox').stop().animate({
+				  scrollTop: $('#chatBox')[0].scrollHeight
+				}, 800);
+		}
+			
+		}
 		var ip = $("#ip_addr").val();
 		document.getElementById('message').value = '';
 		$.ajax({

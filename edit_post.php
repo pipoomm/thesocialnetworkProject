@@ -25,7 +25,7 @@ else { ?>
     <script src="https://www.google.com/recaptcha/api.js?render=6LfHs8IUAAAAAN7L_O2Cu7vvqsSHmajCJcJEJ5OK"></script>
 	  <script>
 	        grecaptcha.ready(function () {
-	            grecaptcha.execute('6LfHs8IUAAAAAN7L_O2Cu7vvqsSHmajCJcJEJ5OK', { action: 'contact' }).then(function (token) {
+	            grecaptcha.execute('6LfHs8IUAAAAAN7L_O2Cu7vvqsSHmajCJcJEJ5OK', { action: 'social' }).then(function (token) {
 	                var recaptchaResponse = document.getElementById('recaptchaResponse');
 	                recaptchaResponse.value = token;
 	            });
