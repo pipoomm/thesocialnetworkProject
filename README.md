@@ -2,7 +2,7 @@ Web Programming Language
 ========================
 
 *************************************************************************************************************************
-Social Network Group Project  **[the Social Network](https://projectsocialnetworkisne.ga/)**.
+Social Network Group Project  **[theSocialNetwork](https://projectsocialnetworkisne.ga/)**.
 *************************************************************************************************************************
 
 > #### Powered by 
