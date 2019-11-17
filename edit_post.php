@@ -22,6 +22,22 @@ else { ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <link rel="stylesheet" type="text/css" href="style/home_style.css">
+    <!-- Colorpicker Jquery -->
+    <script src="dist/jquery.simplecolorpicker.js"></script>
+    <link rel="stylesheet" href="dist/jquery.simplecolorpicker.css">
+  	<link rel="stylesheet" href="dist/jquery.simplecolorpicker-fontawesome.css">
+  	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css">
+	<script>
+		$(document).ready(function() {
+		  $('select[name="colorpicker-fontawesome"]').simplecolorpicker({theme: 'fontawesome'});
+		  $('select[name="colorpicker-fontawesome"]').on('change', function() {
+		    $(document.getElementById('posts_edit')).css('background-color', $('select[name="colorpicker-fontawesome"]').val());
+		    $(document.getElementById('content')).css('background-color', $('select[name="colorpicker-fontawesome"]').val());
+		    var col = $('select[name="colorpicker-fontawesome"]').val();
+		    $("#colorColor").val(col);
+		  });
+		});
+	</script>
     <script src="https://www.google.com/recaptcha/api.js?render=6LfHs8IUAAAAAN7L_O2Cu7vvqsSHmajCJcJEJ5OK"></script>
 	  <script>
 	        grecaptcha.ready(function () {
@@ -48,6 +64,7 @@ background: linear-gradient(to left, #606c88, #3f4c6b);
 		$row=mysqli_fetch_array($run_post);
 		$post_con = $row['post_content'];
 		$upload_image = $row['upload_image'];
+		$color_row = $row['color'];
 	}
 
 	?>
@@ -79,23 +96,50 @@ background: linear-gradient(to left, #606c88, #3f4c6b);
 </div>
 <div class="row">
   <div class="col-sm-3"></div>
-  <div id="posts_edit" class="col-sm-6" >
-  <center>
+  <div id="posts_edit" class="col-sm-6" style="background-color:<?php echo $color_row;?>;">
+  
 		<form action="" method="post" id="f" enctype="multipart/form-data">
-		<textarea class="form-control" cols="83" rows="4" name="content"><?php echo $post_con;?></textarea><br>
+			<select name="colorpicker-fontawesome">
+				  <option value="#f5f5f5">Default</option>
+				  <option value="#FFCDD2">FFCDD2</option>
+				  <option value="#F8BBD0">F8BBD0</option>
+				  <option value="#E1BEE7">E1BEE7</option>
+				  <option value="#D1C4E9">D1C4E9</option>
+				  <option value="#C5CAE9">C5CAE9</option>
+				  <option value="#BBDEFB">BBDEFB</option>
+				  <option value="#B3E5FC">B3E5FC</option>
+				  <option value="#B2EBF2">B2EBF2</option>
+				  <option value="#B2DFDB">B2DFDB</option>
+				  <option value="#C8E6C9">C8E6C9</option>
+				  <option value="#DCEDC8">DCEDC8</option>
+				  <option value="#F0F4C3">F0F4C3</option>
+				  <option value="#FFF9C4">FFF9C4</option>
+				  <option value="#FFECB3">FFECB3</option>
+				  <option value="#FFE0B2">FFE0B2</option>
+				  <option value="#FFCCBC">FFCCBC</option>
+				  <option value="#D7CCC8">D7CCC8</option>
+				  <option value="#ECEFF1">ECEFF1</option>
+				  <option value="#CFD8DC">CFD8DC</option>
+			</select>
+		<input type="hidden" name="colorColor" id="colorColor">
+		<center>
+		<textarea class="form-control" cols="83" rows="4" name="content" id="content"><?php echo $post_con;?></textarea><br>
 		<?php if(strlen($upload_image) >= 1)
   			{
   				echo "<img class='img-fluid' id='posts-img' src='imagepost/$upload_image' style='height:200px;'><br><br> ";
   			}
   		?>
+  		</center>
 		<label class="btn btn-outline-danger" style="float: left;"><i class="far fa-file-image"></i> Insert<input type="file" name="upload_image" size="30">
 		</label>
+		
 		<!--<input type="submit" style="float: right;" name="update" value="Update Post" class="btn btn-success"/>-->
 		<button type="submit" style="float: right;" name="update" class="btn btn-success"/><i class="far fa-edit"></i> Update Post</button> 
 		<button type="submit" style="float: left;" name="update_rm" class="btn btn-outline-danger"/><i class="far fa-file-image"></i> Remove</button> 
 		<input type="hidden" name="recaptcha_response" id="recaptchaResponse">
 		</form>
-		</center>
+		
+
   </div>
   <div class="col-sm-3"></div>
 </div>
@@ -115,32 +159,27 @@ background: linear-gradient(to left, #606c88, #3f4c6b);
 
 	if ($recaptcha->score >= 0.5) {
 
-
-
-		$content_bf = $content;
-
+		
 		$content = $_POST['content'];
-
+		$content_bf = $content;
 		$upload_image = $_FILES['upload_image']['name'];
-
 		$image_tmp = $_FILES['upload_image']['tmp_name'];
-
+		if(!isset($_POST['colorColor']))
+		{
+			$color_update = $color_row;
+		}
+		else
+		{
+			$color_update = $_POST['colorColor'];
+		}
 		$random_number = rand(1, 100);
-
 		if(strlen($upload_image) >= 1 && strlen($content) >= 1)
-
 			{
 
 				move_uploaded_file($image_tmp, "imagepost/$upload_image.$random_number");
-
-
-
-				$update_post = "UPDATE `posts` SET post_content='$content', post_date=CURRENT_TIMESTAMP, upload_image='$upload_image.$random_number' WHERE post_id='$get_id'";
-
+				$update_post = "UPDATE `posts` SET post_content='$content', post_date=CURRENT_TIMESTAMP, upload_image='$upload_image.$random_number', color='$color_update' WHERE post_id='$get_id'";
+				
 				$run_update = mysqli_query($con,$update_post);
-
-
-
 				if($run_update)
 
 				{
@@ -198,10 +237,9 @@ background: linear-gradient(to left, #606c88, #3f4c6b);
 					if($content==$content_bf && strlen($upload_image) >= 1)
 
 					{
-
+						
 						move_uploaded_file($image_tmp, "imagepost/$upload_image.$random_number");
-
-						$update_post = "UPDATE `posts` SET post_date=CURRENT_TIMESTAMP, upload_image='$upload_image.$random_number' WHERE post_id='$get_id'";
+						$update_post = "UPDATE `posts` SET post_content='$content', post_date=CURRENT_TIMESTAMP, upload_image='$upload_image.$random_number', color='$color_update' WHERE post_id='$get_id'";
 
 						$run_update = mysqli_query($con,$update_post);
 
@@ -237,7 +275,7 @@ background: linear-gradient(to left, #606c88, #3f4c6b);
 
 					{
 
-						$update_post = "UPDATE `posts` SET post_content='$content', post_date=CURRENT_TIMESTAMP WHERE post_id='$get_id'";
+						$update_post = "UPDATE `posts` SET post_content='$content', post_date=CURRENT_TIMESTAMP , color='$color_update' WHERE post_id='$get_id'";
 
 						$run_update = mysqli_query($con,$update_post);
 
@@ -301,7 +339,7 @@ if(isset($_POST['update_rm']))
 
 {
 
-	if(strlen($upload_image) < 1)
+	if(strlen($upload_image) == 0)
 
 	{
 

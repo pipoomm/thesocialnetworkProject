@@ -22,18 +22,36 @@ include("includes/header.php");
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    <link rel="stylesheet" type="text/css" href="style/home_style.css">
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
    	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="style/home_style.css">
-    <script src="https://www.google.com/recaptcha/api.js?render=6LfHs8IUAAAAAN7L_O2Cu7vvqsSHmajCJcJEJ5OK"></script>
-
+   
+    <!-- Colorpicker Jquery -->
+    <script src="dist/jquery.simplecolorpicker.js"></script>
+    <link rel="stylesheet" href="dist/jquery.simplecolorpicker.css">
+  	<link rel="stylesheet" href="dist/jquery.simplecolorpicker-fontawesome.css">
+  	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css">
+	<script>
+		$(document).ready(function() {
+		  $('select[name="colorpicker-fontawesome"]').simplecolorpicker({theme: 'fontawesome'});
+		  $('select[name="colorpicker-fontawesome"]').on('change', function() {
+		    $(document.getElementById('insert_post')).css('background-color', $('select[name="colorpicker-fontawesome"]').val());
+		    $(document.getElementById('content')).css('background-color', $('select[name="colorpicker-fontawesome"]').val());
+		    $(document.getElementById('pickup_country')).css('background-color', $('select[name="colorpicker-fontawesome"]').val());
+		    var col = $('select[name="colorpicker-fontawesome"]').val();
+		    $("#colorColor").val(col);
+		  });
+		});
+	</script>
+  	<!-- Google map api -->
     <script src="dist/PlacePicker.js"></script>
+    <!-- Google reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfHs8IUAAAAAN7L_O2Cu7vvqsSHmajCJcJEJ5OK"></script>
 	  <script>
 	        grecaptcha.ready(function () {
 	            grecaptcha.execute('6LfHs8IUAAAAAN7L_O2Cu7vvqsSHmajCJcJEJ5OK', { action: 'social' }).then(function (token) {
@@ -42,6 +60,7 @@ include("includes/header.php");
 	            });
 	        });
 	    </script>
+
 </head>
 <style type="text/css">
 body 
@@ -51,6 +70,10 @@ body
 html 
 {
   scroll-behavior: smooth;
+}
+#content,#pickup_country
+{
+  background-color: #F5F5F5;
 }
 </style>
 <body>
@@ -64,7 +87,29 @@ html
 			    <label style="color: #263238;"><img src='users/<?php echo $user_image; ?>' class='rounded-circle' width='35px' height='35px'><b> Create post</b></label><hr>
 			    <textarea class="form-control" id="content" name="content" rows="4" placeholder="What's on your mind, <?php echo $f_name; ?>?"></textarea>
 			  </div>
-
+			  <select name="colorpicker-fontawesome">
+				  <option value="#f5f5f5">Default</option>
+				  <option value="#FFCDD2">FFCDD2</option>
+				  <option value="#F8BBD0">F8BBD0</option>
+				  <option value="#E1BEE7">E1BEE7</option>
+				  <option value="#D1C4E9">D1C4E9</option>
+				  <option value="#C5CAE9">C5CAE9</option>
+				  <option value="#BBDEFB">BBDEFB</option>
+				  <option value="#B3E5FC">B3E5FC</option>
+				  <option value="#B2EBF2">B2EBF2</option>
+				  <option value="#B2DFDB">B2DFDB</option>
+				  <option value="#C8E6C9">C8E6C9</option>
+				  <option value="#DCEDC8">DCEDC8</option>
+				  <option value="#F0F4C3">F0F4C3</option>
+				  <option value="#FFF9C4">FFF9C4</option>
+				  <option value="#FFECB3">FFECB3</option>
+				  <option value="#FFE0B2">FFE0B2</option>
+				  <option value="#FFCCBC">FFCCBC</option>
+				  <option value="#D7CCC8">D7CCC8</option>
+				  <option value="#ECEFF1">ECEFF1</option>
+				  <option value="#CFD8DC">CFD8DC</option>
+			</select>
+			<input type="hidden" name="colorColor" id="colorColor">
 			  <div class="input-group mb-3">
 			  	<label class="btn btn-secondary btn-sm" style="float: left; border-radius: 1.5rem;"><i class="far fa-file-image"></i> Photo<input type="file" name="upload_image" size="30">
 				</label>
@@ -74,7 +119,6 @@ html
 				    <button class="btn btn-outline-success" type="button" id="button-addon2"><i class="fas fa-location-arrow"></i></button>
 				  </div>
 				</div>
-			  
 			  <button id="btn-post" name="sub" class="btn btn-primary btn-block">Post</button>
 			  <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
 		</form>

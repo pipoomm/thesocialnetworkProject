@@ -33,7 +33,12 @@ function insertPost()
         	global $con;
 
 			global $user_id;
-
+		if($_POST['colorColor'] == '')
+		{
+			$color = '#f5f5f5';
+		} else {
+			$color = htmlentities($_POST['colorColor']);
+		}
 		$content = htmlentities($_POST['content']);
 		$location = htmlentities($_POST['location']);
 		$upload_image = $_FILES['upload_image']['name'];
@@ -59,7 +64,7 @@ function insertPost()
 			{
 				move_uploaded_file($image_tmp, "imagepost/$upload_image.$random_number");
 
-				$insert = "INSERT INTO `posts` (user_id, post_content, upload_image, post_date, location) VALUES('$user_id', '$content', '$upload_image.$random_number', CURRENT_TIMESTAMP, '$location')";
+				$insert = "INSERT INTO `posts` (user_id, post_content, upload_image, post_date, location, color) VALUES('$user_id', '$content', '$upload_image.$random_number', CURRENT_TIMESTAMP, '$location', '$color')";
 
 				echo "<script>
 			Swal.fire({
@@ -93,7 +98,7 @@ function insertPost()
 			{
 				move_uploaded_file($image_tmp, "imagepost/$upload_image.$random_number");
 
-				$insert = "INSERT INTO `posts` (user_id, post_content, upload_image, post_date, location) VALUES('$user_id', '$content', '$upload_image.$random_number', CURRENT_TIMESTAMP, '')";
+				$insert = "INSERT INTO `posts` (user_id, post_content, upload_image, post_date, location, color) VALUES('$user_id', '$content', '$upload_image.$random_number', CURRENT_TIMESTAMP, '', '$color')";
 
 				echo "<script>
 			Swal.fire({
@@ -144,7 +149,7 @@ function insertPost()
 
 						move_uploaded_file($image_tmp, "imagepost/$upload_image.$random_number");
 
-						$insert = "INSERT INTO `posts` (user_id,post_content,upload_image,post_date,location) VALUES ('$user_id','No','$upload_image.$random_number',CURRENT_TIMESTAMP,'$location')";
+						$insert = "INSERT INTO `posts` (user_id,post_content,upload_image,post_date,location,color) VALUES ('$user_id','','$upload_image.$random_number',CURRENT_TIMESTAMP,'$location', '$color')";
 
 						$run = mysqli_query($con, $insert);
 
@@ -176,7 +181,7 @@ function insertPost()
 
 						move_uploaded_file($image_tmp, "imagepost/$upload_image.$random_number");
 
-						$insert = "INSERT INTO `posts` (user_id,post_content,upload_image,post_date,location) VALUES ('$user_id','No','$upload_image.$random_number',CURRENT_TIMESTAMP,'')";
+						$insert = "INSERT INTO `posts` (user_id,post_content,upload_image,post_date,location,color) VALUES ('$user_id','','$upload_image.$random_number',CURRENT_TIMESTAMP,'', '$color')";
 
 						$run = mysqli_query($con, $insert);
 
@@ -209,7 +214,7 @@ function insertPost()
 					{
 						//content not have ric
 						if($upload_image=='' && strlen($location) >= 1){
-					$insert = "INSERT INTO `posts` (`user_id`, `post_content`, `upload_image`, `post_date`, `location`) VALUES ('$user_id',  '$content', '', CURRENT_TIMESTAMP,'$location')";
+					$insert = "INSERT INTO `posts` (`user_id`, `post_content`, `upload_image`, `post_date`, `location` ,`color`) VALUES ('$user_id',  '$content', '', CURRENT_TIMESTAMP,'$location', '$color')";
 
 						$run = mysqli_query($con, $insert);
 							if($run)
@@ -233,7 +238,7 @@ function insertPost()
 							}
 						}
 						else if($upload_image=='' && strlen($location) == 0){
-					$insert = "INSERT INTO `posts` (`user_id`, `post_content`, `upload_image`, `post_date`, `location`) VALUES ('$user_id',  '$content', '', CURRENT_TIMESTAMP,'')";
+					$insert = "INSERT INTO `posts` (`user_id`, `post_content`, `upload_image`, `post_date`, `location`,`color`) VALUES ('$user_id',  '$content', '', CURRENT_TIMESTAMP,'', '$color')";
 
 						$run = mysqli_query($con, $insert);
 							if($run)
@@ -258,7 +263,7 @@ function insertPost()
 						}
 						else if($content=='' && $upload_image=='' && strlen($location) >= 1)
 						{
-							$insert = "INSERT INTO `posts` (`user_id`, `post_content`, `upload_image`, `post_date`, `location`) VALUES ('$user_id',  '', 'ax', CURRENT_TIMESTAMP,'$location')";
+							$insert = "INSERT INTO `posts` (`user_id`, `post_content`, `upload_image`, `post_date`, `location`,`color`) VALUES ('$user_id',  '', '', CURRENT_TIMESTAMP,'$location', '$color')";
 
 						$run = mysqli_query($con, $insert);
 							if($run)
@@ -334,6 +339,7 @@ function get_posts()
 		$upload_image = $row_posts['upload_image'];
 		$post_date = $row_posts['post_date'];
 		$location = $row_posts['location'];
+		$color = $row_posts['color'];
 		$user = "SELECT * FROM `users` WHERE user_id='$user_id' AND posts='yes'";
 		$run_user = mysqli_query($con,$user);
 		$row_user = mysqli_fetch_array($run_user);
@@ -349,11 +355,11 @@ function get_posts()
 	}
 
 		//now displaying posts from database
-		if($content=="No" && strlen($upload_image) >= 1 && strlen($location) >= 1){
+		if($content=='' && strlen($upload_image) >= 1 && strlen($location) >= 1){
 			echo"
 			<div class='row'>
 
-				<div id='posts' class='col-md-12'>
+				<div id='posts' class='col-md-12' style='background-color:$color;'>
 
 					<div class='row'>
 
@@ -398,11 +404,11 @@ function get_posts()
 
 		}
 
-		else if($content=="No" && strlen($upload_image) >= 1 && strlen($location) == 0){
+		else if($content=='' && strlen($upload_image) >= 1 && strlen($location) == 0){
 			echo"
 			<div class='row'>
 
-				<div id='posts' class='col-md-12'>
+				<div id='posts' class='col-md-12' style='background-color:$color;'>
 
 					<div class='row'>
 
@@ -455,7 +461,7 @@ function get_posts()
 
 			<div class='row'>
 
-				<div id='posts' class='col-md-12'>
+				<div id='posts' class='col-md-12' style='background-color:$color;'>
 
 					<div class='row'>
 
@@ -501,16 +507,67 @@ function get_posts()
 			";
 
 		}
+		else if(strlen($content) >= 1 && strlen($upload_image) >= 1 && strlen($location) == 0)
+		{
+
+			echo"
+
+			<div class='row'>
+
+				<div id='posts' class='col-md-12' style='background-color:$color;'>
+
+					<div class='row'>
+
+						<div class='col-sm-2'>
+
+						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
+
+						</div>
+
+						<div class='col'>
+
+							<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+							<h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
+
+						</div>
+
+					</div>
+
+					<div class='row'>
+
+						<div class='col-sm-12'>
+
+							<h3 style='color:black;'>$content</h3><br>
+
+							<center><img class='img-fluid' id='posts-img' src='imagepost/$upload_image' style='height:350px;'></center>
+
+						</div>
+
+					</div><br>
+
+					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>$count Comment</button></a><br>
+
+				</div>
+
+				<div class='col-sm-3'>
+
+				</div>
+
+			</div><br><br>
+
+			";
+
+		}
 
 
 		//content only 
-		else if(strlen($content) >= 1)
+		else if(strlen($content) >= 1 && strlen($upload_image) == 0)
 		{
 			if(strlen($location) >= 1)
 			{
 				echo"
 				<div class='row'>
-					<div id='posts' class='col-md-12'>
+					<div id='posts' class='col-md-12' style='background-color:$color;'>
 						<div class='row'>
 							<div class='col-sm-2'>
 							<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -537,7 +594,7 @@ function get_posts()
 			{
 				echo"
 				<div class='row'>
-					<div id='posts' class='col-md-12'>
+					<div id='posts' class='col-md-12' style='background-color:$color;'>
 						<div class='row'>
 							<div class='col-sm-2'>
 							<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -564,7 +621,7 @@ function get_posts()
 		{
 			echo"
 				<div class='row'>
-					<div id='posts' class='col-md-12'>
+					<div id='posts' class='col-md-12' style='background-color:$color;'>
 						<div class='row'>
 							<div class='col-sm-2'>
 							<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -763,6 +820,7 @@ function single_post(){
 		$upload_image = $row_posts['upload_image'];
 		$post_date = $row_posts['post_date'];
 		$location = $row_posts['location'];
+		$color = $row_posts['color'];
 
 
 		//getting the user who has posted the thread
@@ -855,7 +913,7 @@ function single_post(){
 
 
 
-		if($content=="No" && strlen($upload_image) >= 1 && strlen($upload_image) == 0)
+		if($content=='' && strlen($upload_image) >= 1 && strlen($upload_image) == 0)
 		{
 
 
@@ -868,7 +926,7 @@ function single_post(){
 
 				</div>
 
-				<div id='posts' class='col-sm-6'>
+				<div id='posts' class='col-sm-6' style='background-color:$color;'>
 
 				<div class='row'>
 
@@ -896,13 +954,11 @@ function single_post(){
 
 					</div>
 
-				</div>
+				</div><br>
 
 				<form action='' method='post'>
 
   <div class='form-group'>
-
-    <label for='exampleInputEmail1'>Email address</label>
 
     <input type='text' class='form-control' name='comment' placeholder='Write your comment'>
 
@@ -927,7 +983,7 @@ function single_post(){
 
 
 		}
-		else if($content=="No" && strlen($upload_image) >= 1 && strlen($location) >= 1)
+		else if($content=='' && strlen($upload_image) >= 1 && strlen($location) >= 1)
 		{
 
 
@@ -940,7 +996,7 @@ function single_post(){
 
 				</div>
 
-				<div id='posts' class='col-sm-6'>
+				<div id='posts' class='col-sm-6' style='background-color:$color;'>
 
 				<div class='row'>
 
@@ -969,13 +1025,11 @@ function single_post(){
 
 					</div>
 
-				</div>
+				</div><br>
 
 				<form action='' method='post'>
 
   <div class='form-group'>
-
-    <label for='exampleInputEmail1'>Email address</label>
 
     <input type='text' class='form-control' name='comment' placeholder='Write your comment'>
 
@@ -1006,7 +1060,7 @@ function single_post(){
 			<div class='row'>
 				<div class='col-sm-3'>
 				</div>
-				<div id='posts' class='col-sm-6'>
+				<div id='posts' class='col-sm-6' style='background-color:$color;'>
 				<div class='row'>
 					<div class='col-sm-2'>
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -1021,13 +1075,11 @@ function single_post(){
 						<h3>$content</h3><br>
 						<center><img class='img-fluid' id='posts-img' src='imagepost/$upload_image' style='height:350px;'></center>
 					</div>
-				</div>
+				</div><br>
 
 <form action='' method='post'>
 
   <div class='form-group'>
-
-    <label for='exampleInputEmail1'>Email address</label>
 
     <input type='text' class='form-control' name='comment' placeholder='Write your comment'>
 
@@ -1055,7 +1107,7 @@ function single_post(){
 			<div class='row'>
 				<div class='col-sm-3'>
 				</div>
-				<div id='posts' class='col-sm-6'>
+				<div id='posts' class='col-sm-6' style='background-color:$color;'>
 				<div class='row'>
 					<div class='col-sm-2'>
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -1071,29 +1123,18 @@ function single_post(){
 						<h3>$content</h3><br>
 						<center><img class='img-fluid' id='posts-img' src='imagepost/$upload_image' style='height:350px;'></center>
 					</div>
-				</div>
+				</div><br>
 
 <form action='' method='post'>
-
   <div class='form-group'>
-
-    <label for='exampleInputEmail1'>Email address</label>
-
     <input type='text' class='form-control' name='comment' placeholder='Write your comment'>
-
   </div>
-
   <button class='btn btn-primary' name='reply' style='float:right;'><i class='fas fa-reply'></i> Comment</button>
-
 </form>
 				</div>
-
 				<div class='col-sm-3'>
-
 				</div>
-
 			</div><br><br>
-
 			";
 
 
@@ -1106,7 +1147,7 @@ function single_post(){
 		<div class='row'>
 			<div class='col-sm-3'>
 			</div>
-			<div id='posts' class='col-sm-6'>
+			<div id='posts' class='col-sm-6' style='background-color:$color;'>
 			<div class='row'>
 					<div class='col-sm-2'>
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -1124,10 +1165,9 @@ function single_post(){
 					</div>
 					<div class='col-sm-4'>
 					</div>
-				</div>
+				</div><br>
 				<form action='' method='post'>
   <div class='form-group'>
-    <label for='exampleInputEmail1'>Email address</label>
     <input type='text' class='form-control' name='comment' placeholder='Write your comment'>
   </div>
   <button class='btn btn-primary' name='reply' style='float:right;'><i class='fas fa-reply'></i> Comment</button>
@@ -1144,7 +1184,7 @@ function single_post(){
 		<div class='row'>
 			<div class='col-sm-3'>
 			</div>
-			<div id='posts' class='col-sm-6'>
+			<div id='posts' class='col-sm-6' style='background-color:$color;'>
 			<div class='row'>
 					<div class='col-sm-2'>
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -1163,10 +1203,9 @@ function single_post(){
 					</div>
 					<div class='col-sm-4'>
 					</div>
-				</div>
+				</div><br>
 				<form action='' method='post'>
   <div class='form-group'>
-    <label for='exampleInputEmail1'>Email address</label>
     <input type='text' class='form-control' name='comment' placeholder='Write your comment'>
   </div>
   <button class='btn btn-primary' name='reply' style='float:right;'><i class='fas fa-reply'></i> Comment</button>
@@ -1183,7 +1222,7 @@ function single_post(){
 		<div class='row'>
 			<div class='col-sm-3'>
 			</div>
-			<div id='posts' class='col-sm-6'>
+			<div id='posts' class='col-sm-6' style='background-color:$color;'>
 			<div class='row'>
 					<div class='col-sm-2'>
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -1202,10 +1241,9 @@ function single_post(){
 					</div>
 					<div class='col-sm-4'>
 					</div>
-				</div>
+				</div><br>
 				<form action='' method='post'>
   <div class='form-group'>
-    <label for='exampleInputEmail1'>Email address</label>
     <input type='text' class='form-control' name='comment' placeholder='Write your comment'>
   </div>
   <button class='btn btn-primary' name='reply' style='float:right;'><i class='fas fa-reply'></i> Comment</button>

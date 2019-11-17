@@ -414,7 +414,7 @@ body {
 
 
 				//now displaying all at once
-                if($content=="No" && strlen($upload_image) >= 1 && strlen($location) >= 1){
+                if($content=='' && strlen($upload_image) >= 1 && strlen($location) >= 1){
             echo"
             <div class='row'>
 
@@ -463,7 +463,7 @@ body {
 
         }
 
-        else if($content=="No" && strlen($upload_image) >= 1 && strlen($location) == 0){
+        else if($content=='' && strlen($upload_image) >= 1 && strlen($location) == 0){
             echo"
             <div class='row'>
 

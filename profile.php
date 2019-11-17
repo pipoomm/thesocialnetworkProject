@@ -135,9 +135,13 @@ body {
 	transform: translate(-50%, -50%);
 }
 #own_posts{
-    border: 3px solid #e6e6e6;
     border-radius: 0.5rem;
     padding: 30px 40px;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  -ms-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  -o-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 </style>
 <body>
@@ -312,6 +316,7 @@ body {
 			$upload_image = $row_posts['upload_image'];
 			$post_date = $row_posts['post_date'];
             $location = $row_posts['location'];
+            $color = $row_posts['color'];
 
 			$user = "SELECT * FROM `users` WHERE user_id='$user_id' AND posts='yes'";
 			$run_user = mysqli_query($con,$user);
@@ -322,10 +327,10 @@ body {
 
 			//display post
 
-			if($content == "No" && strlen($upload_image) >= 1 && strlen($location) >= 1)
+			if($content == '' && strlen($upload_image) >= 1 && strlen($location) >= 1)
 			{
 				echo "
-				<div id='own_posts'>
+				<div id='own_posts' style='background-color:$color;'>
 				<div class='row'>
 					<div class='col-sm-2'>
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -347,10 +352,10 @@ body {
 			</div><br><br>
 				";
 			}
-            else if($content == "No" && strlen($upload_image) >= 1 && strlen($location) == 0)
+            else if($content == '' && strlen($upload_image) >= 1 && strlen($location) == 0)
             {
                 echo "
-                <div id='own_posts'>
+                <div id='own_posts' style='background-color:$color;'>
                 <div class='row'>
                     <div class='col-sm-2'>
                         <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -373,7 +378,7 @@ body {
             }
 			else if(strlen($content) >= 1 && strlen($upload_image) >= 1 && strlen($location) >= 1){
 			echo "
-			<div id='own_posts'>
+			<div id='own_posts' style='background-color:$color;'>
 				<div class='row'>
 
 				
@@ -398,11 +403,11 @@ body {
 			</div><br><br>
 			";
 			}
-			else if(strlen($content) >= 1)
+			else if(strlen($content) >= 1 && strlen($upload_image) == 0)
 			{
                 if(strlen($location) >= 1 && strlen($content) >= 1) {
 			echo "
-			<div id='own_posts'>
+			<div id='own_posts' style='background-color:$color;'>
 				<div class='row'>
 					<div class='col-sm-2'>
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -460,38 +465,38 @@ body {
 			}
           }
            else if(strlen($location) == 0) {
-            echo"
+            echo "
+            <div id='own_posts' style='background-color:$color;'>
                 <div class='row'>
-                    <div id='own_posts' class='col-md-12'>
-                        <div class='row'>
-                            <div class='col-sm-2'>
-                            <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
-                            </div>
-                            <div class='col'>
-                                <h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
-                                <h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
-                            </div>
-                        </div>
-                        <div class='row'>
-                            <div class='col-sm-12'>
-                                <h3 style='color:black;'>$content</h3>
-                            </div>
-                        </div><br>
-                        <a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-success btn-sm'>View</button></a>
+                    <div class='col-sm-2'>
+                        <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
+                    </div>
+                    <div class='col'>
+                        <h5><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h5>
+                        <p><small style='color:black;'>Check-in on <strong>$post_date <i class='fas fa-globe-asia'></i></strong></small></p>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-sm-2'>
+                    </div>
+                    <div class='col-sm-6'>
+                        <label>$content</label>
+                    </div>
+                    <div class='col-sm-4'>
+                        
+                    </div>
+                </div>
+                <a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-success btn-sm'>View</button></a>
                 <a href='edit_post.php?post_id=$post_id' style='float:right;'><button  class='btn btn-info btn-sm'>Edit</button></a>
                 <a href='functions/delete_post.php?post_id=$post_id' class='btn btn-danger btn-sm' style='float:right;'>Delete Post</a><br>
-                    </div>
-                    <div class='col-sm-3'>
-                    </div>
-
-                </div><hr>
-                ";
+                </div><br><br>
+            ";
            }
 		}
 	
     else if(strlen($content) == 0 && strlen($upload_image) == 0 && strlen($location) >= 1) {
         echo "
-            <div id='own_posts'>
+            <div id='own_posts' style='background-color:$color;'>
                 <div class='row'>
                     <div class='col-sm-2'>
                         <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
