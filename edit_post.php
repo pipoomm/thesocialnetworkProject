@@ -31,8 +31,11 @@ else { ?>
 		$(document).ready(function() {
 		  $('select[name="colorpicker-fontawesome"]').simplecolorpicker({theme: 'fontawesome'});
 		  $('select[name="colorpicker-fontawesome"]').on('change', function() {
-		    $(document.getElementById('posts_edit')).css('background-color', $('select[name="colorpicker-fontawesome"]').val());
-		    $(document.getElementById('content')).css('background-color', $('select[name="colorpicker-fontawesome"]').val());
+		  	var select_color =  $('select[name="colorpicker-fontawesome"]').val();
+			var gradient = "linear-gradient(to top, "+select_color+", #ffffff)";
+			console.log(gradient);
+		    $(document.getElementById('posts_edit')).css('background', gradient);
+		   
 		    var col = $('select[name="colorpicker-fontawesome"]').val();
 		    $("#colorColor").val(col);
 		  });
@@ -64,7 +67,8 @@ background: linear-gradient(to left, #606c88, #3f4c6b);
 		$row=mysqli_fetch_array($run_post);
 		$post_con = $row['post_content'];
 		$upload_image = $row['upload_image'];
-		$color_row = $row['color'];
+		$bg = $row['color'];
+		$color_row = "linear-gradient(to top, $bg, #ffffff)";
 	}
 
 	?>
@@ -96,7 +100,7 @@ background: linear-gradient(to left, #606c88, #3f4c6b);
 </div>
 <div class="row">
   <div class="col-sm-3"></div>
-  <div id="posts_edit" class="col-sm-6" style="background-color:<?php echo $color_row;?>;">
+  <div id="posts_edit" class="col-sm-6" style="background:<?php echo $color_row;?>;">
   
 		<form action="" method="post" id="f" enctype="multipart/form-data">
 			<select name="colorpicker-fontawesome">
@@ -208,7 +212,7 @@ background: linear-gradient(to left, #606c88, #3f4c6b);
 
 			{
 
-				if($upload_image=='' && $content == '')
+				if($upload_image=='' && $content == '' && $color != '')
 
 				{
 

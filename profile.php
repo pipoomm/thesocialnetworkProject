@@ -47,7 +47,7 @@ body {
     text-align: center;
 }
 .profile-img img{
-    width: 70%;
+    height: 160px;
 }
 .profile-img .file {
     position: relative;
@@ -316,13 +316,17 @@ body {
 			$upload_image = $row_posts['upload_image'];
 			$post_date = $row_posts['post_date'];
             $location = $row_posts['location'];
-            $color = $row_posts['color'];
+            $bg = $row_posts['color'];
+            $color = "linear-gradient(to top, $bg, #ffffff)";
 
 			$user = "SELECT * FROM `users` WHERE user_id='$user_id' AND posts='yes'";
 			$run_user = mysqli_query($con,$user);
 			$row_user = mysqli_fetch_array($run_user);
 
-			$user_name = $row_user['user_name'];
+            $f_name = $row_user['f_name'];
+            $l_name = $row_user['l_name'];
+            $user_name = $f_name. ' ' .$l_name;
+			//$user_name = $row_user['user_name'];
 			$user_image = $row_user['user_image'];
 
 			//display post
@@ -330,7 +334,7 @@ body {
 			if($content == '' && strlen($upload_image) >= 1 && strlen($location) >= 1)
 			{
 				echo "
-				<div id='own_posts' style='background-color:$color;'>
+				<div id='own_posts' style='background:$color;'>
 				<div class='row'>
 					<div class='col-sm-2'>
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -355,7 +359,7 @@ body {
             else if($content == '' && strlen($upload_image) >= 1 && strlen($location) == 0)
             {
                 echo "
-                <div id='own_posts' style='background-color:$color;'>
+                <div id='own_posts' style='background:$color;'>
                 <div class='row'>
                     <div class='col-sm-2'>
                         <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -378,7 +382,7 @@ body {
             }
 			else if(strlen($content) >= 1 && strlen($upload_image) >= 1 && strlen($location) >= 1){
 			echo "
-			<div id='own_posts' style='background-color:$color;'>
+			<div id='own_posts' style='background:$color;'>
 				<div class='row'>
 
 				
@@ -407,7 +411,7 @@ body {
 			{
                 if(strlen($location) >= 1 && strlen($content) >= 1) {
 			echo "
-			<div id='own_posts' style='background-color:$color;'>
+			<div id='own_posts' style='background:$color;'>
 				<div class='row'>
 					<div class='col-sm-2'>
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -466,7 +470,7 @@ body {
           }
            else if(strlen($location) == 0) {
             echo "
-            <div id='own_posts' style='background-color:$color;'>
+            <div id='own_posts' style='background:$color;'>
                 <div class='row'>
                     <div class='col-sm-2'>
                         <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -496,7 +500,7 @@ body {
 	
     else if(strlen($content) == 0 && strlen($upload_image) == 0 && strlen($location) >= 1) {
         echo "
-            <div id='own_posts' style='background-color:$color;'>
+            <div id='own_posts' style='background:$color;'>
                 <div class='row'>
                     <div class='col-sm-2'>
                         <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>

@@ -29,10 +29,13 @@ body {
 	background: linear-gradient(to left, #2980b9, #2c3e50);
 }
 #own_posts{
-    padding: 40px 50px;
-	width:90%;
-    background-color: #EEEEEE;
-    border-radius: 5px;
+    border-radius: 0.5rem;
+    padding: 30px 40px;
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  -ms-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  -o-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 #posts_img {
     height:300px;
@@ -55,7 +58,7 @@ body {
     text-align: center;
 }
 .profile-img img{
-     width: 70%;
+     width: 160px;
     height: 100%;
 }
 .profile-img .file {
@@ -389,6 +392,8 @@ body {
 				$post_id = $row_posts['post_id'];
 				$user_id = $row_posts['user_id'];
                 $location = $row_posts['location'];
+                $bg = $row_posts['color'];
+                $color = "linear-gradient(to top, $bg, #ffffff)";
 				$content = $row_posts['post_content'];
 				$upload_image = $row_posts['upload_image'];
 				$post_date = $row_posts['post_date'];
@@ -401,14 +406,15 @@ body {
 
 				//getting the user who has posted the thread
 
-				$user = "select * from users where user_id='$user_id' AND posts='yes'";
+				$user = "SELECT * FROM `users` WHERE user_id='$user_id' AND posts='yes'";
 
 				$run_user = mysqli_query($con,$user);
 				$row_user=mysqli_fetch_array($run_user);
 
-				$user_name = $row_user['user_name'];
-				$f_name = $row['f_name'];
-				$l_name = $row['l_name'];
+				
+				$f_name = $row_user['f_name'];
+				$l_name = $row_user['l_name'];
+                $user_name = $f_name. ' ' .$l_name;
 				$user_image = $row_user['user_image'];
                
 
@@ -418,7 +424,7 @@ body {
             echo"
             <div class='row'>
 
-                <div id='own_posts' class='col-md-12'>
+                <div id='own_posts' class='col-md-12' style='background:$color;'>
 
                     <div class='row'>
 
@@ -430,10 +436,10 @@ body {
 
                         <div class='col'>
 
-                            <h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+                            <h5><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h5>
 
                             <h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
-                            <h6><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h6>
+                            <h6><small style='color:#263238;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h6>
 
                         </div>
 
@@ -457,7 +463,7 @@ body {
 
                 </div>
 
-            </div><hr>
+            </div><br>
 
             ";
 
@@ -467,7 +473,7 @@ body {
             echo"
             <div class='row'>
 
-                <div id='own_posts' class='col-md-12'>
+                <div id='own_posts' class='col-md-12' style='background:$color;'>
 
                     <div class='row'>
 
@@ -479,7 +485,7 @@ body {
 
                         <div class='col'>
 
-                            <h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+                            <h5><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h5>
 
                             <h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
 
@@ -505,7 +511,7 @@ body {
 
                 </div>
 
-            </div><hr>
+            </div><br>
 
             ";
 
@@ -520,7 +526,7 @@ body {
 
             <div class='row'>
 
-                <div id='own_posts' class='col-md-12'>
+                <div id='own_posts' class='col-md-12' style='background:$color;'>
 
                     <div class='row'>
 
@@ -532,9 +538,9 @@ body {
 
                         <div class='col'>
 
-                            <h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+                            <h5><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h5>
                             <h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
-                            <h6><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h6>
+                            <h6><small style='color:#263238;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h6>
 
 
                         </div>
@@ -561,7 +567,7 @@ body {
 
                 </div>
 
-            </div><hr>
+            </div><br>
 
             ";
 
@@ -575,15 +581,15 @@ body {
             {
                 echo"
                 <div class='row'>
-                    <div id='own_posts' class='col-md-12'>
+                    <div id='own_posts' class='col-md-12' style='background:$color;'>
                         <div class='row'>
                             <div class='col-sm-2'>
                             <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
                             </div>
                             <div class='col'>
-                                <h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+                                <h5><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h5>
                                 <h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
-                                <h6><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h6>
+                                <h6><small style='color:#263238;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h6>
                             </div>
                         </div>
                         <div class='row'>
@@ -595,20 +601,20 @@ body {
                     </div>
                     <div class='col-sm-3'>
                     </div>
-                </div><hr>
+                </div><br>
                 ";
             }
             else if(strlen($location) == 0)
             {
                 echo"
                 <div class='row'>
-                    <div id='own_posts' class='col-md-12'>
+                    <div id='own_posts' class='col-md-12' style='background:$color;'>
                         <div class='row'>
                             <div class='col-sm-2'>
                             <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
                             </div>
                             <div class='col'>
-                                <h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+                                <h5><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h5>
                                 <h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
                             </div>
                         </div>
@@ -621,7 +627,7 @@ body {
                     </div>
                     <div class='col-sm-3'>
                     </div>
-                </div><hr>
+                </div><br>
                 ";
             }
         }
@@ -629,15 +635,15 @@ body {
         {
             echo"
                 <div class='row'>
-                    <div id='own_posts' class='col-md-12'>
+                    <div id='own_posts' class='col-md-12' style='background:$color;'>
                         <div class='row'>
                             <div class='col-sm-2'>
                             <p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
                             </div>
                             <div class='col'>
-                                <h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+                                <h5><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h5>
                                 <h5><small style='color:black;'>Updated a check-in on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
-                                <h5><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h5>
+                                <h5><small style='color:#263238;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h5>
                             </div>
                         </div>
                         <div class='row'>
@@ -649,7 +655,7 @@ body {
                     </div>
                     <div class='col-sm-3'>
                     </div>
-                </div><hr>
+                </div><br>
                 ";
         }
     

@@ -339,13 +339,17 @@ function get_posts()
 		$upload_image = $row_posts['upload_image'];
 		$post_date = $row_posts['post_date'];
 		$location = $row_posts['location'];
-		$color = $row_posts['color'];
+		$bg = $row_posts['color'];
+		$color = "linear-gradient(to top, $bg, #ffffff)";
 		$user = "SELECT * FROM `users` WHERE user_id='$user_id' AND posts='yes'";
 		$run_user = mysqli_query($con,$user);
 		$row_user = mysqli_fetch_array($run_user);
 
 		$user_name = $row_user['user_name'];
 		$user_image = $row_user['user_image'];
+		$f_name = $row_user['f_name'];
+		$l_name = $row_user['l_name'];
+		$name_user = $f_name. ' ' .$l_name;
 
 		$get_com = "SELECT  post_id, COUNT(*)  FROM `comments` WHERE post_id='$post_id'";
 
@@ -359,7 +363,7 @@ function get_posts()
 			echo"
 			<div class='row'>
 
-				<div id='posts' class='col-md-12' style='background-color:$color;'>
+				<div id='posts' class='col-md-12' style='background:$color;'>
 
 					<div class='row'>
 
@@ -371,10 +375,10 @@ function get_posts()
 
 						<div class='col'>
 
-							<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+							<h4><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$name_user</a></h4>
 
 							<h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
-							<h6><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h6>
+							<h6><small style='color:#263238;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h6>
 
 						</div>
 
@@ -390,7 +394,7 @@ function get_posts()
 
 					</div><br>
 
-					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>$count Comment</button></a><br>
+					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-light'>$count Comment</button></a><br>
 
 				</div>
 
@@ -408,7 +412,7 @@ function get_posts()
 			echo"
 			<div class='row'>
 
-				<div id='posts' class='col-md-12' style='background-color:$color;'>
+				<div id='posts' class='col-md-12' style='background:$color;'>
 
 					<div class='row'>
 
@@ -420,7 +424,7 @@ function get_posts()
 
 						<div class='col'>
 
-							<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+							<h4><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$name_user</a></h4>
 
 							<h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
 
@@ -438,7 +442,7 @@ function get_posts()
 
 					</div><br>
 
-					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>$count Comment</button></a><br>
+					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-light btn-sm'>$count Comment</button></a><br>
 
 				</div>
 
@@ -461,7 +465,7 @@ function get_posts()
 
 			<div class='row'>
 
-				<div id='posts' class='col-md-12' style='background-color:$color;'>
+				<div id='posts' class='col-md-12' style='background:$color;'>
 
 					<div class='row'>
 
@@ -473,9 +477,9 @@ function get_posts()
 
 						<div class='col'>
 
-							<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+							<h4><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$name_user</a></h4>
 							<h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
-							<h6><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h6>
+							<h6><small style='color:#263238;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h6>
 
 
 						</div>
@@ -494,7 +498,7 @@ function get_posts()
 
 					</div><br>
 
-					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>$count Comment</button></a><br>
+					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-light btn-sm'>$count Comment</button></a><br>
 
 				</div>
 
@@ -514,7 +518,7 @@ function get_posts()
 
 			<div class='row'>
 
-				<div id='posts' class='col-md-12' style='background-color:$color;'>
+				<div id='posts' class='col-md-12' style='background:$color;'>
 
 					<div class='row'>
 
@@ -526,7 +530,7 @@ function get_posts()
 
 						<div class='col'>
 
-							<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+							<h4><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$name_user</a></h4>
 							<h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
 
 						</div>
@@ -545,7 +549,7 @@ function get_posts()
 
 					</div><br>
 
-					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>$count Comment</button></a><br>
+					<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-light btn-sm'>$count Comment</button></a><br>
 
 				</div>
 
@@ -567,15 +571,15 @@ function get_posts()
 			{
 				echo"
 				<div class='row'>
-					<div id='posts' class='col-md-12' style='background-color:$color;'>
+					<div id='posts' class='col-md-12' style='background:$color;'>
 						<div class='row'>
 							<div class='col-sm-2'>
 							<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
 							</div>
 							<div class='col'>
-								<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+								<h4><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$name_user</a></h4>
 								<h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
-								<h6><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h6>
+								<h6><small style='color:#263238;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h6>
 							</div>
 						</div>
 						<div class='row'>
@@ -583,7 +587,7 @@ function get_posts()
 								<h3 style='color:black;'>$content</h3>
 							</div>
 						</div><br>
-						<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>$count Comment</button></a><br>
+						<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-light btn-sm'>$count Comment</button></a><br>
 					</div>
 					<div class='col-sm-3'>
 					</div>
@@ -594,13 +598,13 @@ function get_posts()
 			{
 				echo"
 				<div class='row'>
-					<div id='posts' class='col-md-12' style='background-color:$color;'>
+					<div id='posts' class='col-md-12' style='background:$color;'>
 						<div class='row'>
 							<div class='col-sm-2'>
 							<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
 							</div>
 							<div class='col'>
-								<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+								<h4><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$name_user</a></h4>
 								<h5><small style='color:black;'>Updated a post on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
 							</div>
 						</div>
@@ -609,7 +613,7 @@ function get_posts()
 								<h3 style='color:black;'>$content</h3>
 							</div>
 						</div><br>
-						<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>$count Comment</button></a><br>
+						<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-light btn-sm'>$count Comment</button></a><br>
 					</div>
 					<div class='col-sm-3'>
 					</div>
@@ -621,15 +625,15 @@ function get_posts()
 		{
 			echo"
 				<div class='row'>
-					<div id='posts' class='col-md-12' style='background-color:$color;'>
+					<div id='posts' class='col-md-12' style='background:$color;'>
 						<div class='row'>
 							<div class='col-sm-2'>
 							<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
 							</div>
 							<div class='col'>
-								<h3><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
+								<h4><a style='text-decoration:none; cursor:pointer;color #3897f0;' href='user_profile.php?u_id=$user_id'>$name_user</a></h4>
 								<h5><small style='color:black;'>Updated a check-in on <strong>$post_date </strong><i class='fas fa-globe-asia'></i></small></h5>
-								<h5><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h5>
+								<h5><small style='color:#263238;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h5>
 							</div>
 						</div>
 						<div class='row'>
@@ -637,7 +641,7 @@ function get_posts()
 								<h3 style='color:black;'></h3>
 							</div>
 						</div><br>
-						<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>$count Comment</button></a><br>
+						<a href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-light btn-sm'>$count Comment</button></a><br>
 					</div>
 					<div class='col-sm-3'>
 					</div>
@@ -724,85 +728,45 @@ function search_user(){
 
 	while($row_user=mysqli_fetch_array($run_user)){
 
-
-
 		$user_id = $row_user['user_id'];
-
 		$f_name = $row_user['f_name'];
-
 		$l_name = $row_user['l_name'];
-
 		$username = $row_user['user_name'];
-
 		$user_image = $row_user['user_image'];
-
-
 
 		//now displaying all at once
 
-
-
 		echo "
-
 		<br><br>
-
-		<div id='posts' class='row'>
-
+		<div id='posts_members' class='row'>
 			<div class='col-sm-3'>
-
 			</div>
-
 			<div class='col-sm-6'>
-
 			<div class='row' id='find_people'>
-
 			<div class='col-sm-4'>
-
 			<a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>
-
 			<img class='rounded-circle' src='users/$user_image' width='150px' height='140px' title='$username' style='float:left; margin:1px;'/>
-
 			</a>
-
 			</div><br><br>
 
 			<div class='col-sm-6'>
-
 			<a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>
-
 			<strong><h4>$f_name $l_name</h4></strong>
-
 			</a>
-
 			</div>
-
 			<div class='col-sm-3'>
-
 			</div>
 
-
-
 			</div>
-
-
-
 			</div>
 
 			<div class='col-sm-4'>
-
 			</div>
-
 		</div><br>
 
 		";
-
-
-
 	}
-
-
-
-	}
+}
 
 
 
@@ -820,7 +784,8 @@ function single_post(){
 		$upload_image = $row_posts['upload_image'];
 		$post_date = $row_posts['post_date'];
 		$location = $row_posts['location'];
-		$color = $row_posts['color'];
+		$bg = $row_posts['color'];
+		$color = "linear-gradient(to top, $bg, #ffffff)";
 
 
 		//getting the user who has posted the thread
@@ -834,9 +799,9 @@ function single_post(){
 		$row_user=mysqli_fetch_array($run_user);
 
 
-
-		$user_name = $row_user['user_name'];
-
+		$f_name = $row_user['f_name'];
+		$l_name = $row_user['l_name'];
+		$user_name = $f_name. ' ' .$l_name;
 		$user_image = $row_user['user_image'];
 
 
@@ -856,8 +821,9 @@ function single_post(){
 
 
 		$user_com_id = $row_com['user_id'];
-
-		$user_com_name = $row_com['user_name'];
+		$f_name = $row_com['f_name'];
+		$l_name = $row_com['l_name'];
+		$user_com_name = $f_name. ' ' .$l_name;
 
 
 
@@ -913,31 +879,18 @@ function single_post(){
 
 
 
-		if($content=='' && strlen($upload_image) >= 1 && strlen($upload_image) == 0)
+		if($content=='' && strlen($upload_image) >= 1 && strlen($location) == 0)
 		{
-
-
-
 			echo "
-
 			<div class='row'>
-
 				<div class='col-sm-3'>
-
 				</div>
-
-				<div id='posts' class='col-sm-6' style='background-color:$color;'>
-
+				<div id='posts' class='col-sm-6' style='background:$color;'>
 				<div class='row'>
-
 					<div class='col-sm-2'>
-
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
-
 					</div>
-
-					<div class='col-md-auto'>
-
+					<div class='col'>
 						<h3><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
 
 						<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
@@ -968,7 +921,7 @@ function single_post(){
 
 </form>
 
-				<!--<a class='first' href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-info'>Comment</button></a><br>-->
+				<!--<a class='first' href='single.php?post_id=$post_id' style='float:right;'><button class='btn btn-light btn-sm'>Comment</button></a><br>-->
 
 				</div>
 
@@ -996,7 +949,7 @@ function single_post(){
 
 				</div>
 
-				<div id='posts' class='col-sm-6' style='background-color:$color;'>
+				<div id='posts' class='col-sm-6' style='background:$color;'>
 
 				<div class='row'>
 
@@ -1011,7 +964,7 @@ function single_post(){
 						<h3><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
 
 						<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
-                        <h5><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h5>
+                        <h5><small style='color:#263238;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h5>
 
 					</div>
 
@@ -1060,12 +1013,12 @@ function single_post(){
 			<div class='row'>
 				<div class='col-sm-3'>
 				</div>
-				<div id='posts' class='col-sm-6' style='background-color:$color;'>
+				<div id='posts' class='col-sm-6' style='background:$color;'>
 				<div class='row'>
 					<div class='col-sm-2'>
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
 					</div>
-					<div class='col-md-auto'>
+					<div class='col-sm-auto'>
 						<h3><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
 						<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
 					</div>
@@ -1107,7 +1060,7 @@ function single_post(){
 			<div class='row'>
 				<div class='col-sm-3'>
 				</div>
-				<div id='posts' class='col-sm-6' style='background-color:$color;'>
+				<div id='posts' class='col-sm-6' style='background:$color;'>
 				<div class='row'>
 					<div class='col-sm-2'>
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -1115,7 +1068,7 @@ function single_post(){
 					<div class='col'>
 						<h3><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
 						<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
-						<h5><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h5>
+						<h5><small style='color:#263238;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h5>
 					</div>
 				</div>
 				<div class='row'>
@@ -1147,7 +1100,7 @@ function single_post(){
 		<div class='row'>
 			<div class='col-sm-3'>
 			</div>
-			<div id='posts' class='col-sm-6' style='background-color:$color;'>
+			<div id='posts' class='col-sm-6' style='background:$color;'>
 			<div class='row'>
 					<div class='col-sm-2'>
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -1158,12 +1111,8 @@ function single_post(){
 					</div>
 				</div>
 				<div class='row'>
-					<div class='col-sm-2'>
-					</div>
-					<div class='col-sm-6'>
+					<div class='col-sm-12'>
 						<h3><p>$content</p></h3>
-					</div>
-					<div class='col-sm-4'>
 					</div>
 				</div><br>
 				<form action='' method='post'>
@@ -1184,24 +1133,20 @@ function single_post(){
 		<div class='row'>
 			<div class='col-sm-3'>
 			</div>
-			<div id='posts' class='col-sm-6' style='background-color:$color;'>
+			<div id='posts' class='col-sm-6' style='background:$color;'>
 			<div class='row'>
 					<div class='col-sm-2'>
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
 					</div>
-					<div class='col-md-auto'>
+					<div class='col'>
 						<h3><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
 						<h4><small style='color:black;'>Updated a post on <strong>$post_date</strong></small></h4>
-						<h5><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h5>
+						<h5><small style='color:#263238;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h5>
 					</div>
 				</div>
 				<div class='row'>
-					<div class='col-sm-2'>
-					</div>
-					<div class='col-sm-6'>
+					<div class='col-sm-12'>
 						<h3><p>$content</p></h3>
-					</div>
-					<div class='col-sm-4'>
 					</div>
 				</div><br>
 				<form action='' method='post'>
@@ -1222,7 +1167,7 @@ function single_post(){
 		<div class='row'>
 			<div class='col-sm-3'>
 			</div>
-			<div id='posts' class='col-sm-6' style='background-color:$color;'>
+			<div id='posts' class='col-sm-6' style='background:$color;'>
 			<div class='row'>
 					<div class='col-sm-2'>
 						<p><img src='users/$user_image' class='rounded-circle' width='100px' height='100px'></p>
@@ -1230,18 +1175,10 @@ function single_post(){
 					<div class='col'>
 						<h3><a style='text-decoration: none;cursor: pointer;color: #3897f0;' href='user_profile.php?u_id=$user_id'>$user_name</a></h3>
 						<h4><small style='color:black;'>Updated check-in on <strong>$post_date</strong></small></h4>
-						<h4><small style='color:#9e9e9e;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h4>
+						<h4><small style='color:#263238;font-size: 69%;'><strong><i class='fas fa-location-arrow'></i> $location </strong></small></h4>
 					</div>
 				</div>
-				<div class='row'>
-					<div class='col-sm-2'>
-					</div>
-					<div class='col-sm-6'>
-						<h3><p></p></h3>
-					</div>
-					<div class='col-sm-4'>
-					</div>
-				</div><br>
+				<br>
 				<form action='' method='post'>
   <div class='form-group'>
     <input type='text' class='form-control' name='comment' placeholder='Write your comment'>
@@ -1275,7 +1212,8 @@ function single_post(){
 
 			echo "<script>window.open('single.php?post_id=$post_id','_self')</script>";
 
-			}else{
+			}
+			else{
 
 			$insert = "INSERT INTO `comments` (post_id,user_id,comment,comment_author,date) VALUES ('$post_id','$user_id','$comment','$user_com_name',NOW())";
 

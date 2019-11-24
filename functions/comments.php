@@ -17,7 +17,7 @@
         <div class='col-sm-3'>
     	</div>
             <div class='col-sm-6'>
-                <div id='posts' class='panel-body'>
+                <div id='posts_com' class='panel-body'>
                 	<div>
 					<h5><strong>$com_name</strong></h5><p style='color: #949494;' ><i> commented</i> on $date <i class='fas fa-globe-asia'></i></p>
 					<h3 style='margin-left:5px;font-size:15px;color: black;'>$com</h3>

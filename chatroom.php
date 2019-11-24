@@ -137,7 +137,7 @@ body{
 
     </div>
 
-    <div class="col-6">
+    <div class="col-sm-6">
 
     	<h3 style="color: #50312A;font-family: Ubuntu, sans-serif;"><strong>TalkTalk</strong></h3>
     	<h6>IP: <?php echo $ip_address; ?></h6>
@@ -203,20 +203,11 @@ $.ajax({
 	}
 });
 }
-setInterval (function(){display();} ,1000);
-
+setInterval (function(){display();} ,500);
 		$("#message").keypress(function (e) {
 		if (e.keyCode == 13) {
 		var name = $("#user_name").val();
 		var message = $("#message").val();
-		if(!message)
-		{
-			$('#chatBox').stop().animate({
-				  scrollTop: $('#chatBox')[0].scrollHeight
-				}, 800);
-		}
-			
-		}
 		var ip = $("#ip_addr").val();
 		document.getElementById('message').value = '';
 		$.ajax({

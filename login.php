@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['recaptcha_response'])
 
 			Swal.fire({
 
-  			text: 'You are robot!',
+  			text: 'Error while verify reCAPTCHA',
 
   			type: 'error',
 

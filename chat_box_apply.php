@@ -24,7 +24,6 @@ include("includes/header.php");
 <body>
 <style type="text/css">
 body{
-		overflow-y: hidden;
 		overflow-x: hidden;
 		background: url(images/2.jpg);
 }
@@ -40,7 +39,7 @@ body{
     padding-top: 5%;
     padding-bottom: 2%;
     background: #fff;
-    height: 700px;
+    height: 100%;
 }
 div#messagesDiv{
 	display: block;

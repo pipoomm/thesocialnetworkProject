@@ -26,7 +26,7 @@ include("includes/header.php");
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
    	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -35,14 +35,16 @@ include("includes/header.php");
     <script src="dist/jquery.simplecolorpicker.js"></script>
     <link rel="stylesheet" href="dist/jquery.simplecolorpicker.css">
   	<link rel="stylesheet" href="dist/jquery.simplecolorpicker-fontawesome.css">
-  	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css">
+  	<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css">
 	<script>
 		$(document).ready(function() {
+
 		  $('select[name="colorpicker-fontawesome"]').simplecolorpicker({theme: 'fontawesome'});
 		  $('select[name="colorpicker-fontawesome"]').on('change', function() {
-		    $(document.getElementById('insert_post')).css('background-color', $('select[name="colorpicker-fontawesome"]').val());
-		    $(document.getElementById('content')).css('background-color', $('select[name="colorpicker-fontawesome"]').val());
-		    $(document.getElementById('pickup_country')).css('background-color', $('select[name="colorpicker-fontawesome"]').val());
+		  	var select_color =  $('select[name="colorpicker-fontawesome"]').val();
+			var gradient = "linear-gradient(to top, "+select_color+", #ffffff)";
+			console.log(gradient);
+		    $(document.getElementById('insert_post')).css('background', gradient);
 		    var col = $('select[name="colorpicker-fontawesome"]').val();
 		    $("#colorColor").val(col);
 		  });
@@ -71,6 +73,11 @@ html
 {
   scroll-behavior: smooth;
 }
+.row
+{
+	margin-left: 0px;
+	margin-right: 0px;
+}
 #content,#pickup_country
 {
   background-color: #F5F5F5;
@@ -80,7 +87,7 @@ html
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col"></div>
-	<div id="insert_post" class="col-6"><br>
+	<div id="insert_post" class="col-sm-6"><br>
 		<form action="home.php?id=<?php echo $user_id; ?>" method="post" id="f" enctype="multipart/form-data">
 			  <div class="form-group">
 			  	
@@ -147,19 +154,5 @@ html
   			<div class="col-sm-3"></div>
 		</div>
 	</div>
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'Poom Somwong']);
-  _gaq.push(['_setDomainName', 'localhost']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
 </body>
 </html>
